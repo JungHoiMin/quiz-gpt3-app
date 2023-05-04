@@ -1,90 +1,49 @@
 <template>
-  <div class="home">
-    <q-select v-model="school" :options="schools" label="학교 분류"/>
-    <q-select v-model="region" :options="regions" label="지역"/>
-    <q-select v-model="sch1" :options="sch1s" label="학교유형1"/>
-    <q-select v-model="sch2" :options="sch2s" label="학교유형2"/>
-    <q-select v-model="est" :options="ests" label="설립유형"/>
-  </div>
+    <div class="q-pa-md q-gutter-y-sm">
+      <div class="bg-orange text-white">
+        <q-toolbar>
+          <q-btn flat round dense icon="menu" class="q-mr-sm" />
+          <q-space />
+          <q-input dense style="width: 300px" v-model="searchText" label="검색어"/>
+          <q-btn flat round dense icon="search" class="q-mr-xs" @click="this.search"/>
+        </q-toolbar>
+        <q-toolbar inset>
+          <SearchHeader/>
+        </q-toolbar>
+      </div>
+    </div>
+
+  <SchoolInfos/>
 </template>
 
 <script>
 // @ is an alias to /src
 
 
+import SearchHeader from "@/components/SearchHeader.vue";
+import {mapActions, mapMutations} from "vuex";
+import SchoolInfos from "@/components/SchoolInfos.vue";
+
 export default {
   name: 'HomeView',
-  data() {
-    return {
-
-    }
+  components: {SchoolInfos, SearchHeader},
+  methods:{
+    ...mapMutations([
+        'updateSearchText',
+    ]),
+    ...mapActions([
+        'search',
+    ])
   },
-  computed: {
-    school: {
+  computed:{
+    searchText:{
       get() {
-        return this.$store.state.searchObj.gubun
+        return this.$store.state.searchObj.searchText
       },
-      set(value) {
-        this.$store.commit('updateSchoolType', value)
-      },
-    },
-    region: {
-      get() {
-        return this.$store.state.searchObj.region
-      },
-      set(value) {
-        this.$store.commit('updateRegion', value)
-      },
-    },
-    sch1: {
-      get() {
-        return this.$store.state.searchObj.sch1
-      },
-      set(value) {
-        this.$store.commit('updateSch1', value)
-      },
-    },
-    sch2: {
-      get() {
-        return this.$store.state.searchObj.sch2
-      },
-      set(value) {
-        this.$store.commit('updateSch2', value)
-      },
-    },
-    est: {
-      get() {
-        return this.$store.state.searchObj.est
-      },
-      set(value) {
-        this.$store.commit('updateEst', value)
-      },
-    },
-    schools:{
-      get(){
-        return this.$store.state.searchData.schoolList
-      },
-    },
-    regions:{
-      get(){
-        return this.$store.state.searchData.regionList
-      },
-    },
-    sch1s:{
-      get(){
-        return this.$store.state.searchData.sch1List
-      },
-    },
-    sch2s:{
-      get(){
-        return this.$store.state.searchData.sch2List
-      },
-    },
-    ests:{
-      get(){
-        return this.$store.state.searchData.estList
-      },
-    },
+      set(value){
+        this.updateSearchText(value);
+      }
+    }
   }
 
 }

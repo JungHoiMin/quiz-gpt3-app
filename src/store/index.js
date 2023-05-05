@@ -20,6 +20,7 @@ export default createStore({
       estList: [],
     },
     searchResult: [],
+    selectedSchool: {},
     searchLoading: false,
     searchCode: {
       apiKey: '1cf544905766ed6b6bf264ad7e063195',
@@ -125,6 +126,9 @@ export default createStore({
     },
     updateSearchResult(state, value) {
       state.searchResult = value;
+    },
+    updateSelectedSchool(state, value) {
+      state.selectedSchool = value;
     }
   },
   actions: {
@@ -147,14 +151,15 @@ export default createStore({
 
       await axios.get(requestUrl).then(res => {
         context.commit('updateSearchResult',
-            res.data.dataSearch.content.map(item => {
-              return {adres: item.adres, schoolName: item.schoolName}
-            })
+            res.data.dataSearch.content
+                // .map(item => {
+              // return {adres: item.adres, schoolName: item.schoolName}
+            // })
         )
       })
 
       context.state.searchLoading = false
-    }
+    },
   },
   modules: {}
 })

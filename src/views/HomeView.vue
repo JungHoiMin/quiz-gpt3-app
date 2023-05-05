@@ -1,19 +1,19 @@
 <template>
-    <div class="q-pa-md q-gutter-y-sm">
-      <div class="bg-orange text-white">
-        <q-toolbar>
-          <q-btn flat round dense icon="menu" class="q-mr-sm" />
-          <q-space />
-          <q-input dense style="width: 300px" v-model="searchText" label="검색어"/>
-          <q-btn flat round dense icon="search" class="q-mr-xs" @click="this.search"/>
-        </q-toolbar>
-        <q-toolbar inset>
-          <SearchHeader/>
-        </q-toolbar>
-      </div>
+  <div class="q-pa-md q-gutter-y-sm row">
+    <div class="bg-orange text-white col-4">
+      <q-toolbar>
+        <q-btn flat round dense icon="menu" class="q-mr-sm"/>
+        <q-space/>
+        <q-input dense style="width: 300px" v-model="searchText" label="검색어"/>
+        <q-btn flat round dense icon="search" class="q-mr-xs" @click="this.search"/>
+      </q-toolbar>
+      <q-toolbar inset>
+        <SearchHeader/>
+      </q-toolbar>
+      <SchoolInfos/>
     </div>
-
-  <SchoolInfos/>
+    <div class="col"></div>
+  </div>
 </template>
 
 <script>
@@ -27,20 +27,20 @@ import SchoolInfos from "@/components/SchoolInfos.vue";
 export default {
   name: 'HomeView',
   components: {SchoolInfos, SearchHeader},
-  methods:{
+  methods: {
     ...mapMutations([
-        'updateSearchText',
+      'updateSearchText',
     ]),
     ...mapActions([
-        'search',
+      'search',
     ])
   },
-  computed:{
-    searchText:{
+  computed: {
+    searchText: {
       get() {
         return this.$store.state.searchObj.searchText
       },
-      set(value){
+      set(value) {
         this.updateSearchText(value);
       }
     }

@@ -3,18 +3,21 @@
     <q-table
             flat bordered
             title="리스트"
-            :rows="searchResult"
-            :columns="columns"
+            :rows="this.searchResult"
+            :columns="this.columns"
             row-key="name"
             :loading="searchLoading"
+            @row-Click="this.selectSchool"
+            :rows-per-page-options="[10]"
     >
     </q-table>
+    {{this.selectedSchool}}
   </div>
 </template>
 
 <script>
 
-import {mapState} from "vuex";
+import { mapMutations, mapState} from "vuex";
 
 export default {
   name: "SchoolInfos",
@@ -30,8 +33,17 @@ export default {
     ...mapState([
         'searchResult',
         'searchLoading',
+        'selectedSchool',
     ]),
   },
+  methods:{
+    ...mapMutations([
+        'updateSelectedSchool'
+    ]),
+    selectSchool(evt,row){
+      this.updateSelectedSchool(row)
+    }
+  }
 }
 </script>
 

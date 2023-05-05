@@ -86,10 +86,11 @@ export default {
 </script>
 
 <style scoped>
-.q-select{
+.q-select {
     padding: 5px;
 }
-div{
+
+div {
     padding-right: 40px;
 }
 </style>
